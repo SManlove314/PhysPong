@@ -1,7 +1,7 @@
 import math
 import random
 
-def level1Question():
+def level1Question(): # Returns a pair of values; either str, int or str, str; corresponding to a level 1 question and its answer.
     level1Categories = ['Addition/Subtraction','Multiplication','Division','Area']
     type = random.choice(level1Categories)
     asCap = 50
@@ -26,6 +26,7 @@ def level1Question():
         question = f'What is {a} {chr(215)} {b}?'
         answer = a * b
         return question, answer
+    # Create area problems for rectangles, triangles, and circles
     if type == 'Area':
         a, b = random.randint(1,areaCap), random.randint(1,areaCap)
         shape = random.choice(['Rectangle','Triangle','Circle'])
@@ -42,6 +43,7 @@ def level1Question():
         question = f'Find the area of a {areaInstMap[shape]}'
         answer = areaAnsMap[shape]
         return question, answer
+    # Create division questions
     if type == 'Division':
         a, b = random.randint(1,mdCap), random.randint(1,mdCap)
         question = f'What is {a*b} {chr(247)} {a}?'
