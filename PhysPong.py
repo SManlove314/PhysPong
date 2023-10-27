@@ -46,19 +46,20 @@ def level1Question(): # Returns a pair of values; either str, int or str, str; c
         return question, answer
     # Create division questions
     if type == 'Division':
-        a, b = random.randint(1,mdCap), random.randint(1,mdCap)
+        a, b = random.randint(2,mdCap), random.randint(2,mdCap)
         question = f'What is {a*b} {chr(247)} {a}?'
         answer = b
         return question, answer
 
 def level2Question(): # Returns a pair of values; str, int or str, str; corresponding to a level 2 question and its answer.
-    level2Categories = ['SolveForX', 'Volume']
+    level2Categories = ['SolveForX', 'Volume', 'Unit Circle']
     type = random.choice(level2Categories)
     # min/max value parameters
     xMin,xMax = 2,7
     aMin,aMax = 1,6
     bMin,bMax = -10,11
     volMax = 7
+    radMax = 5
     # Create linear equation problems
     if type == 'SolveForX':
         x = random.randint(xMin,xMax)
@@ -70,7 +71,7 @@ def level2Question(): # Returns a pair of values; str, int or str, str; correspo
         return question, answer
     # Create volume problems
     if type == 'Volume':
-        l,w,h = [random.randint(1,volMax)for i in range (3)]
+        l,w,h = random.randint(1,radMax),random.randint(1,volMax),random.randint(1,volMax)
         shape = random.choice(['R Prism','Cylinder','Sphere'])
         volQuestMap = {
         'R Prism': f'rectangular prism with length {l}, width {w}, and height {h}.',
@@ -80,22 +81,23 @@ def level2Question(): # Returns a pair of values; str, int or str, str; correspo
         volAnsMap = {
         'R Prism': l*w*h,
         'Cylinder': f'{l*l*h}\u03c0',
-        'Sphere' : '{}{} \u03c0'.format(int((l**3)/3) if (l**3)/3.0 %1 == 0 else l**3,''if (l**3)/3.0 %1 == 0 else '/3')
+        'Sphere' : '{}{} \u03c0'.format(int(4*(l**3)/3) if (l**3)/3.0 %1 == 0 else 4*l**3,''if (l**3)/3.0 %1 == 0 else '/3')
         }
         question = f'Find the volume of a {volQuestMap[shape]}'
         answer = volAnsMap[shape]
         return question,answer
 
 def level3Question():# Returns a pair of values; str, str; corresponding to a level 2 question and its answer.
-    level3Categories = ['Polynomial Derivative']
+    level3Categories = ['Polynomial Derivative','Sin Derivative','Product Rule','SolveForX']
     type = random.choice(level3Categories)
     # min/max value parameters
-    degreeMax = 3
+    degreeMax = 4
     aMax,bMax = 5,5
     if type == 'Polynomial Derivative':
-        degrees = sorted(random.sample([i for i in range(degreeMax+1)],k=2),reverse=True)
+        degrees = sorted(random.sample([i for i in range(1,degreeMax+1)],k=2),reverse=True)
         a,b = random.randint(1,aMax),random.randint(1,bMax)
         xReps = { # String representation of the x part of each term
+        4 : 'x^4',
         3 : 'x^3',
         2 : 'x^2',
         1 : 'x',
