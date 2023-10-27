@@ -51,7 +51,7 @@ def level1Question(): # Returns a pair of values; either str, int or str, str; c
         answer = b
         return question, answer
 
-def level2Question(): # Returns a pair of values; str, int; corresponding to a level 2 question and its answer.
+def level2Question(): # Returns a pair of values; str, int or str, str; corresponding to a level 2 question and its answer.
     level2Categories = ['SolveForX', 'Volume']
     type = random.choice(level2Categories)
     # min/max value parameters
@@ -65,7 +65,7 @@ def level2Question(): # Returns a pair of values; str, int; corresponding to a l
         a = random.randint(aMin,aMax)
         b = random.randint(bMin,bMax)
         c = a * x + b
-        question = 'Solve for x: {}x {} {} = {}'.format(a,'+'if b >= 0 else '-',b if b>=0 else -1*b,c)
+        question = 'Solve for x: {}x {} {} = {}'.format(a,'+'if b >= 0 else '-',abs(b),c)
         answer = x
         return question, answer
     # Create volume problems
@@ -86,4 +86,29 @@ def level2Question(): # Returns a pair of values; str, int; corresponding to a l
         answer = volAnsMap[shape]
         return question,answer
 
-print(level2Question())
+def level3Question():# Returns a pair of values; str, str; corresponding to a level 2 question and its answer.
+    level3Categories = ['Polynomial Derivative']
+    type = random.choice(level3Categories)
+    # min/max value parameters
+    degreeMax = 3
+    aMax,bMax = 5,5
+    if type == 'Polynomial Derivative':
+        degrees = sorted(random.sample([i for i in range(degreeMax+1)],k=2),reverse=True)
+        a,b = random.randint(1,aMax),random.randint(1,bMax)
+        xReps = { # String representation of the x part of each term
+        3 : 'x^3',
+        2 : 'x^2',
+        1 : 'x',
+        0 : ''
+        }
+        question = f'Find the derivative of {a}{xReps[degrees[0]]} + {b}{xReps[degrees[1]]}.'
+        answer = '{}{}'.format(f'{a*degrees[0]}{xReps[degrees[0]-1]}','' if degrees[1] == 0 else f' + {b*degrees[1]}{xReps[degrees[1]-1]}')
+        return question, answer
+
+num1,num2,num3 = 5,5,5
+for i in range(num1):
+    print(level1Question())
+for i in range(num2):
+    print(level2Question())
+for i in range(num3):
+    print(level3Question())
