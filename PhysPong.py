@@ -86,6 +86,39 @@ def level2Question(): # Returns a pair of values; str, int or str, str; correspo
         question = f'Find the volume of a {volQuestMap[shape]}'
         answer = volAnsMap[shape]
         return question,answer
+    if type == 'Unit Circle':
+        pi = '\u03c0'
+        sr = '\u221a'
+        inf = '\u221e'
+        trigValues = [ # Pi: \u03c0   ; Square root: \u221a   ; Infinity: \u221e
+            [0,0,1,0],
+            [f'{pi}/6','1/2',f'{sr}3/2',f'{sr}3/3'],
+            [f'{pi}/4',f'{sr}2/2',f'{sr}2/2',1],
+            [f'{pi}/3',f'{sr}3/2','1/2',f'{sr}3'],
+            [f'{pi}/2',1,0,inf],
+            [f'2{pi}/3',f'{sr}3/2','-1/2',f'-{sr}3'],
+            [f'3{pi}/4',f'{sr}2/2',f'-{sr}2/2',-1],
+            [f'5{pi}/6','1/2',f'-{sr}3/2',f'-{sr}3/3'],
+            [pi,0,-1,0],
+            [f'7{pi}/6','-1/2',f'-{sr}3/2',f'{sr}3/3'],
+            [f'5{pi}/4',f'-{sr}2/2',f'-{sr}2/2',1],
+            [f'4{pi}/3',f'-{sr}3/2','-1/2',f'{sr}3'],
+            [f'3{pi}/2',-1,0,f'-{inf}'],
+            [f'5{pi}/3',f'-{sr}3/2','1/2',f'-{sr}3'],
+            [f'7{pi}/4',f'-{sr}2/2',f'{sr}2/2',-1],
+            [f'11{pi}/6','-1/2',f'{sr}3/2',f'-{sr}3/3'],
+            [f'2{pi}',0,1,0]
+        ]
+        thetaValue = random.choice(trigValues)
+        function = random.choice(['sin','cos','tan'])
+        functionMap = {
+        'sin' : 1,
+        'cos' : 2,
+        'tan' : 3
+        }
+        question = f'What is the {function} of {thetaValue[0]}?'
+        answer = thetaValue[functionMap[function]]
+        return question, answer
 
 def level3Question():# Returns a pair of values; str, str; corresponding to a level 2 question and its answer.
     level3Categories = ['Polynomial Derivative','Sin Derivative','Product Rule','SolveForX']
@@ -107,10 +140,13 @@ def level3Question():# Returns a pair of values; str, str; corresponding to a le
         answer = '{}{}'.format(f'{a*degrees[0]}{xReps[degrees[0]-1]}','' if degrees[1] == 0 else f' + {b*degrees[1]}{xReps[degrees[1]-1]}')
         return question, answer
 
-num1,num2,num3 = 5,5,5
-for i in range(num1):
-    print(level1Question())
-for i in range(num2):
-    print(level2Question())
-for i in range(num3):
-    print(level3Question())
+def printAll():
+    num1,num2,num3 = 5,5,5
+    for i in range(num1):
+        print(level1Question())
+    for i in range(num2):
+        print(level2Question())
+    for i in range(num3):
+        print(level3Question())
+
+printAll()
