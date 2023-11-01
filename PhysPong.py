@@ -86,6 +86,7 @@ def level2Question(): # Returns a pair of values; str, int or str, str; correspo
         question = f'Find the volume of a {volQuestMap[shape]}'
         answer = volAnsMap[shape]
         return question,answer
+    # Create unit circle trig problems
     if type == 'Unit Circle':
         pi = '\u03c0'
         sr = '\u221a'
@@ -126,6 +127,8 @@ def level3Question():# Returns a pair of values; str, str; corresponding to a le
     # min/max value parameters
     degreeMax = 4
     aMax,bMax = 5,5
+    cMax,dMax = 4,4
+    # Create polynimial derivative problems
     if type == 'Polynomial Derivative':
         degrees = sorted(random.sample([i for i in range(1,degreeMax+1)],k=2),reverse=True)
         a,b = random.randint(1,aMax),random.randint(1,bMax)
@@ -138,6 +141,41 @@ def level3Question():# Returns a pair of values; str, str; corresponding to a le
         }
         question = f'Find the derivative of {a}{xReps[degrees[0]]} + {b}{xReps[degrees[1]]}.'
         answer = '{}{}'.format(f'{a*degrees[0]}{xReps[degrees[0]-1]}','' if degrees[1] == 0 else f' + {b*degrees[1]}{xReps[degrees[1]-1]}')
+        return question, answer
+    # Create sine and cosine derivative problems
+    if type == 'Sin Derivative':
+        # Format: aSin(cx) + bCos(dx)
+        a,b = random.randint(-aMax,aMax),random.randint(-bMax,bMax)
+        c,d = random.randint(-cMax,cMax),random.randint(-dMax,dMax)
+        if a == 0 and b == 0:
+            b = -7 # Easiest way to implement error correction. Made the problem harder because I think thats funny.
+        sinTerm = '' if  a == 0 else '{}sin({}{})'.format('' if a==1 else '-' if a==-1 else a,'' if c ==1 else '-' if c==-1 else c,''if c == 0 else 'x')
+        cosTerm = '' if  b == 0 else '{}cos({}{})'.format(''if abs(b)==1 else abs(b),'' if d==1 else '-' if d==-1 else d,''if d == 0 else 'x')
+        question = 'Find the derivative of {}{}{}'.format(sinTerm,''if cosTerm == '' else ' + ' if b>=0 and sinTerm != '' else ' - ',cosTerm)
+        sinAnsTerm = '' if a == 0 or c == 0 else '{}cos({}x)'.format(''if a*c==1 else '-' if a*c==-1 else a*c,'' if c==1 else '-' if c==-1 else c)
+        cosAnsTerm = '' if b == 0 or d == 0 else '{}sin({}x)'.format('' if abs(-1*b*d)==1 else abs(-1*b*d),'' if d==1 else '-' if d==-1 else d)
+        answer = '{}{}{}'.format(sinAnsTerm,'' if cosAnsTerm == '' or (sinAnsTerm == '' and (-1*b*d)>0) else ' + ' if (-1*b*d)>0 and sinAnsTerm != '' else ' - ',cosAnsTerm)
+        if answer == '':
+            answer = 0
+        return question, answer
+    # Create product rule problems
+    if type == 'Product Rule':
+        derivatives = {
+            'x' : '',
+            'x\u00B2' : '2x',
+            'x\u00B3' : '3x\u00B2',
+            'e^x' : 'e^x',
+            'sin(x)' : 'cos(x)',
+            'cos(x)' : '(-sin(x))',
+            'ln(x)' : '(1/x)'
+        }
+        term1 = random.choice(list(derivatives))
+        termChoices = list(derivatives)[3:]
+        if term1 in termChoices:
+            termChoices.remove(term1)
+        term2 = random.choice(termChoices)
+        question = f'Find the derivative of {term1}{term2}'
+        answer = f'{term1}{derivatives[term2]} + {term2}{derivatives[term1]}'
         return question, answer
 
 def printAll():
