@@ -163,19 +163,29 @@ def level3Question():# Returns a pair of values; str, str; corresponding to a le
         derivatives = {
             'x' : '',
             'x\u00B2' : '2x',
-            'x\u00B3' : '3x\u00B2',
+            #'x\u00B3' : '3x\u00B2',
             'e^x' : 'e^x',
             'sin(x)' : 'cos(x)',
             'cos(x)' : '(-sin(x))',
             'ln(x)' : '(1/x)'
         }
         term1 = random.choice(list(derivatives))
-        termChoices = list(derivatives)[3:]
+        termChoices = list(derivatives)[2:]
         if term1 in termChoices:
             termChoices.remove(term1)
         term2 = random.choice(termChoices)
         question = f'Find the derivative of {term1}{term2}'
         answer = f'{term1}{derivatives[term2]} + {term2}{derivatives[term1]}'
+        return question, answer
+    # Create quadratic equation solution problems
+    if type == 'SolveForX':
+        solValues = [i for i in range(-4,0)]+[i for i in range(2,6)]
+        x1 = random.choice(solValues)
+        x2 = random.choice(solValues)
+        b = -1 * (x1 + x2)
+        c = x1*x2
+        question = 'Solve for x: x^2 {} {}x {} {} = 0'.format('-' if b<0 else '+',abs(b),'-' if c<0 else '+',abs(c))
+        answer = f'x = {x1},{x2}'
         return question, answer
 
 def printAll():
